@@ -1,256 +1,246 @@
 import React from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu'
-import { Link } from 'react-router-dom'
-import { CheckCircleIcon, CloudIcon, CpuChipIcon, GlobeAltIcon, HddIcon, RocketLaunchIcon, ServerIcon, ShieldCheckIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { onDomainChange, onSearchDomain, onSubscribeNewsletter, onNewsletterEmailChange } from '@/lib/index-logic'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Field, FieldContent, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Progress } from '@/components/ui/progress'
+import { Separator } from '@/components/ui/separator'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { CookieIcon, CpuChipIcon, HandRaisedIcon, MousePointerClickIcon, SparklesIcon, TrophyIcon, UserPlusIcon } from '@heroicons/react/24/outline'
+import { startQuickDemo, createAccount } from '@/lib/index-logic'
 
 export function Home() {
   React.useEffect(() => { document.title = "Home" }, [])
-  const [domainQuery, setDomainQuery] = React.useState('')
-  const [newsletterEmail, setNewsletterEmail] = React.useState('')
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <CloudIcon className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">HostCo</span>
+    <div>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 bg-gradient-to-br from-background to-secondary/30">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          <div className="space-y-8 lg:max-w-lg">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-foreground to-primary/80 bg-clip-text text-transparent">Home</h1>
+            <p className="text-xl text-muted-foreground leading-relaxed">Click cookies. Buy upgrades. Dominate the leaderboard. The ultimate idle clicking experience awaits.</p>
+            <div className="flex flex-col sm:flex-row gap-4 pt-8">
+              <Button size="lg" onClick={startQuickDemo}>
+                <CookieIcon className="h-5 w-5 mr-2" />
+                <div>Start Clicking!</div>
+              </Button>
+              <Button variant="outline" size="lg">
+                <div>Play Full Game</div>
+              </Button>
+            </div>
+            <div className="flex items-center gap-2 pt-4">
+              <Badge variant="secondary">1M+ cookies baked</Badge>
+              <Separator orientation="vertical" className="h-4 mx-2" />
+              <Badge variant="outline">Live Demo</Badge>
+            </div>
           </div>
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <Link to="/shared-hosting">
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">Shared Hosting</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/vps">
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">VPS Hosting</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/about">
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">About Us</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link to="/support">
-                  <NavigationMenuLink className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">Support</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <UserCircleIcon className="h-6 w-6" />
-            </Button>
+          <div className="relative">
+            <div className="relative w-full h-64 sm:h-80 lg:h-96 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 border-4 border-primary/30 animate-pulse shadow-2xl">
+              <CookieIcon className="absolute inset-0 w-full h-full p-8 sm:p-12 lg:p-16 text-primary/80 animate-bounce hover:scale-110 transition-transform duration-200 cursor-pointer group-hover:rotate-12" />
+              <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-destructive/20 rounded-full animate-ping" />
+              <div className="absolute -bottom-6 -right-6 w-16 h-16 bg-accent/30 rounded-full animate-pulse delay-100" />
+            </div>
           </div>
         </div>
-      </header>
-      <main className="flex-1">
-        <section className="w-full bg-muted/30 py-20 lg:py-32">
-          <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl">Find Your Perfect Domain & Hosting</h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">Reliable, fast, and secure web hosting solutions designed to scale with your business. Start your journey with a memorable domain name.</p>
-            <div className="mx-auto mt-10 max-w-xl">
-              <InputGroup>
-                <InputGroupAddon>
-                  <GlobeAltIcon className="h-5 w-5 text-muted-foreground" />
-                </InputGroupAddon>
-                <InputGroupInput type="text" placeholder="Search for your perfect domain..." value={domainQuery} onChange={onDomainChange} />
-                <InputGroupButton onClick={onSearchDomain}>Search</InputGroupButton>
-              </InputGroup>
-              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <CheckCircleIcon className="h-4 w-4 text-primary" />
-                <span>Includes free SSL certificate and 24/7 support.</span>
+      </section>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-20">
+          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">Live Leaderboard</h2>
+          <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">Top 10 players battling for cookie supremacy</p>
+        </div>
+        <Card className="max-w-4xl mx-auto overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12">
+                  <span>#</span>
+                </TableHead>
+                <TableHead>Player</TableHead>
+                <TableHead />
+                <TableHead />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-bold text-primary">1</TableCell>
+                <TableCell className="font-bold">$state.topPlayerName</TableCell>
+                <TableCell className="text-right font-mono">$state.topPlayerCookies</TableCell>
+                <TableCell className="text-right text-sm text-muted-foreground">$state.topPlayerCps</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>2</TableCell>
+                <TableCell>$state.player2Name</TableCell>
+                <TableCell className="text-right font-mono">$state.player2Cookies</TableCell>
+                <TableCell className="text-right text-sm text-muted-foreground">$state.player2Cps</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>3</TableCell>
+                <TableCell>$state.player3Name</TableCell>
+                <TableCell className="text-right font-mono">$state.player3Cookies</TableCell>
+                <TableCell className="text-right text-sm text-muted-foreground">$state.player3Cps</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>4</TableCell>
+                <TableCell>$state.player4Name</TableCell>
+                <TableCell className="text-right font-mono">$state.player4Cookies</TableCell>
+                <TableCell className="text-right text-sm text-muted-foreground">$state.player4Cps</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>…</TableCell>
+                <TableCell>View full leaderboard</TableCell>
+                <TableCell />
+                <TableCell />
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Card>
+      </section>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-secondary/5">
+        <div className="text-center mb-20">
+          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">Core Mechanics</h2>
+          <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">Click → Earn → Upgrade → Repeat → Win</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <HandRaisedIcon className="h-8 w-8 text-primary" />
               </div>
+              <CardTitle>Click Cookie</CardTitle>
+              <CardDescription>Click the giant cookie to earn cookies instantly. Every click counts!</CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <CpuChipIcon className="h-8 w-8 text-primary" />
+              </div>
+              <CardTitle>CPS Boost</CardTitle>
+              <CardDescription>Cookies Per Second from buildings and upgrades generate passive income.</CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <TrophyIcon className="h-8 w-8 text-primary" />
+              </div>
+              <CardTitle>Achievements</CardTitle>
+              <CardDescription>Unlock 100+ achievements and permanent bonuses as you progress.</CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-4xl mx-auto">
+          <Carousel opts="[object Object]" className="w-full">
+            <CarouselContent className="-ml-1">
+              <CarouselItem>
+                <Card className="border-0 bg-gradient-to-r from-primary/10 to-secondary/10">
+                  <CardHeader>
+                    <CardTitle>Cursor (x10)</CardTitle>
+                    <CardDescription>$10 • +0.1 CPS • Automatically clicks cookies</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <MousePointerClickIcon className="h-5 w-5" />
+                        <span className="text-sm font-medium">Cursor</span>
+                      </div>
+                      <Badge>Featured</Badge>
+                    </div>
+                    <Progress value={75} />
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-0 bg-gradient-to-r from-destructive/10 to-secondary/10">
+                  <CardHeader>
+                    <CardTitle>Grandma (x100)</CardTitle>
+                    <CardDescription>$100 • +1 CPS • A nice grandma to bake more cookies</CardDescription>
+                  </CardHeader>
+                </Card>
+              </CarouselItem>
+              <CarouselItem>
+                <Card className="border-0 bg-gradient-to-r from-accent/10 to-primary/10">
+                  <CardHeader>
+                    <CardTitle>Farm (x1K)</CardTitle>
+                    <CardDescription>$1,100 • +8 CPS • An army of grandmas isn't enough...</CardDescription>
+                  </CardHeader>
+                </Card>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+      </section>
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-gradient-to-b from-primary/5 to-background">
+        <div className="max-w-2xl mx-auto text-center space-y-8">
+          <Alert variant="default">
+            <AlertTitle>
+              <SparklesIcon className="h-6 w-6 mr-2" />
+              <div>Recent Achievements</div>
+            </AlertTitle>
+            <AlertDescription>Players around the world are crushing milestones right now</AlertDescription>
+          </Alert>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 p-4 bg-card rounded-xl border">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback>JD</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">$state.recentPlayer1</p>
+                <p className="text-xs text-muted-foreground truncate">Unlocked 'Elderly ovens' (5 minutes ago)</p>
+              </div>
+              <Badge variant="secondary">Rare</Badge>
+            </div>
+            <div className="flex items-center gap-3 p-4 bg-card rounded-xl border">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback>AB</AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">$state.recentPlayer2</p>
+                <p className="text-xs text-muted-foreground truncate">Reached 1 quadrillion cookies (23 minutes ago)</p>
+              </div>
+              <Badge variant="default">Epic</Badge>
             </div>
           </div>
-        </section>
-        <section className="w-full py-16 lg:py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Core Hosting Services</h2>
-              <p className="mt-4 text-muted-foreground">Choose the perfect foundation for your next big project.</p>
-            </div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <ServerIcon className="mb-4 h-8 w-8 text-primary" />
-                  <CardTitle>Shared Hosting</CardTitle>
-                  <CardDescription>Perfect for personal sites, blogs, and small businesses.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-foreground">$2.99</span>
-                    <span className="text-muted-foreground">/mo</span>
-                  </div>
-                  <ul className="space-y-3 text-sm text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>1 Website</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>50 GB SSD Storage</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>Unmetered Bandwidth</span>
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Link className="w-full" to="/shared-hosting">
-                    <Button className="w-full" variant="outline">View Plans</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-              <Card className="relative flex flex-col border-primary shadow-lg">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground">Most Popular</Badge>
-                </div>
-                <CardHeader>
-                  <CpuChipIcon className="mb-4 h-8 w-8 text-primary" />
-                  <CardTitle>VPS Hosting</CardTitle>
-                  <CardDescription>Dedicated resources for growing businesses and developers.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-foreground">$9.99</span>
-                    <span className="text-muted-foreground">/mo</span>
-                  </div>
-                  <ul className="space-y-3 text-sm text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>2 vCPU Cores</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>4 GB RAM</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>80 GB NVMe Storage</span>
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Link className="w-full" to="/vps">
-                    <Button className="w-full">Configure VPS</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <HddIcon className="mb-4 h-8 w-8 text-primary" />
-                  <CardTitle>Dedicated Servers</CardTitle>
-                  <CardDescription>Maximum performance, control, and security for enterprise.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <div className="mb-6">
-                    <span className="text-4xl font-bold text-foreground">$79.99</span>
-                    <span className="text-muted-foreground">/mo</span>
-                  </div>
-                  <ul className="space-y-3 text-sm text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>Intel Xeon E-2274G</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>32 GB DDR4 ECC RAM</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircleIcon className="h-4 w-4 text-primary" />
-                      <span>2x 500 GB NVMe (RAID 1)</span>
-                    </li>
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Link className="w-full" to="/support">
-                    <Button className="w-full" variant="outline">Contact Sales</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            </div>
-          </div>
-        </section>
-        <section className="w-full bg-muted/50 py-16 lg:py-24">
-          <div className="container mx-auto px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Trusted by Thousands Worldwide</h2>
-            <p className="mt-4 text-lg text-muted-foreground mb-12">Backed by our industry-leading 99.9% Uptime Guarantee.</p>
-            <Carousel opts="[object Object]" className="mx-auto w-full max-w-5xl">
-              <CarouselContent>
-                <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <Card className="border-none shadow-sm">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <ShieldCheckIcon className="h-12 w-12 text-muted-foreground/50" />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <Card className="border-none shadow-sm">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <CloudIcon className="h-12 w-12 text-muted-foreground/50" />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <Card className="border-none shadow-sm">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <RocketLaunchIcon className="h-12 w-12 text-muted-foreground/50" />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <Card className="border-none shadow-sm">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <ServerIcon className="h-12 w-12 text-muted-foreground/50" />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-                <CarouselItem className="basis-1/2 md:basis-1/3 lg:basis-1/5">
-                  <Card className="border-none shadow-sm">
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <GlobeAltIcon className="h-12 w-12 text-muted-foreground/50" />
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
-          </div>
-        </section>
-        <section className="w-full py-16 lg:py-24">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <Card className="border-none bg-primary text-primary-foreground shadow-xl">
-              <CardContent className="flex flex-col items-center justify-between gap-8 p-8 md:flex-row md:p-12">
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Stay Updated with HostCo</h3>
-                  <p className="mt-2 text-primary-foreground/80">Subscribe to our newsletter for exclusive hosting deals, performance tips, and company news.</p>
-                </div>
-                <div className="w-full max-w-md">
-                  <form onSubmit={onSubscribeNewsletter} className="flex w-full flex-col gap-2">
-                    <InputGroup>
-                      <InputGroupInput type="email" placeholder="Enter your email address" value={newsletterEmail} onChange={onNewsletterEmailChange} required className="bg-background text-foreground" />
-                      <InputGroupButton type="submit" variant="secondary">Subscribe</InputGroupButton>
-                    </InputGroup>
-                    <p className="text-xs text-primary-foreground/60">We respect your privacy. Unsubscribe at any time.</p>
-                  </form>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      </main>
+          <Dialog>
+            <DialogTrigger>
+              <Button size="lg" className="w-full sm:w-auto">
+                <UserPlusIcon className="h-5 w-5 mr-2" />
+                <div>Sign Up & Save Progress</div>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Save Your Cookie Empire</DialogTitle>
+                <DialogDescription>Create an account to save your progress, compete on leaderboards, and unlock cloud sync.</DialogDescription>
+              </DialogHeader>
+              <Field>
+                <FieldLabel>Email</FieldLabel>
+                <FieldContent>
+                  <Input placeholder="yourname@example.com" type="email" />
+                </FieldContent>
+              </Field>
+              <Field>
+                <FieldLabel>Display Name</FieldLabel>
+                <FieldContent>
+                  <Input placeholder="CookieMaster3000" />
+                </FieldContent>
+              </Field>
+              <DialogFooter>
+                <Button onClick={createAccount}>Create Account</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </section>
     </div>
   )
 }
