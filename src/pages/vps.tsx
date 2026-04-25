@@ -1,149 +1,176 @@
 import React from 'react'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Link } from 'react-router-dom'
-import { CircleStackIcon, CpuChipIcon, CurrencyDollarIcon, ServerIcon } from '@heroicons/react/24/outline'
-import { onCheckout } from '@/lib/vps-logic'
+import { BoltIcon, CircleStackIcon, CpuChipIcon, GlobeAltIcon, ServerIcon, ServerStackIcon } from '@heroicons/react/24/outline'
 
 export function Vpshosting() {
   React.useEffect(() => { document.title = "VpsHosting" }, [])
-  const [managementTier, setManagementTier] = React.useState('')
-  const [cpuSlider, setCpuSlider] = React.useState('')
-  const [ramSlider, setRamSlider] = React.useState('')
-  const [storageSlider, setStorageSlider] = React.useState('')
-  const [os, setOs] = React.useState('')
-  const [controlPanel, setControlPanel] = React.useState('')
-  const [location, setLocation] = React.useState('')
+  const [activeTab, setActiveTab] = React.useState(false)
+  const [cpuValue, setCpuValue] = React.useState('')
+  const [ramValue, setRamValue] = React.useState('')
+  const [storageValue, setStorageValue] = React.useState('')
+  const [osValue, setOsValue] = React.useState('')
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
-        <header className="space-y-2">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">VpsHosting</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">High-performance virtual private servers with dedicated resources. Scale instantly as your business grows.</p>
-        </header>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="min-h-screen bg-background pb-12">
+      <div className="bg-card border-b border-border px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">VpsHosting</h1>
+          <p className="mt-2 max-w-2xl text-lg text-muted-foreground">High-performance virtual private servers for developers and scaling businesses. Configure your ideal environment below.</p>
+        </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Compute</CardTitle>
-              <CpuChipIcon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">$state.cpuDisplay</div>
-              <p className="text-xs text-muted-foreground">Dedicated vCPU Cores</p>
+            <CardContent className="p-6 flex items-center space-x-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CpuChipIcon className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Compute</p>
+                <p className="text-2xl font-bold text-foreground">$state.cpuDisplay</p>
+              </div>
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Memory</CardTitle>
-              <CircleStackIcon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">$state.ramDisplay</div>
-              <p className="text-xs text-muted-foreground">ECC DDR4 RAM</p>
+            <CardContent className="p-6 flex items-center space-x-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <ServerStackIcon className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Memory</p>
+                <p className="text-2xl font-bold text-foreground">$state.ramDisplay</p>
+              </div>
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Storage</CardTitle>
-              <ServerIcon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">$state.storageDisplay</div>
-              <p className="text-xs text-muted-foreground">Enterprise NVMe SSD</p>
+            <CardContent className="p-6 flex items-center space-x-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <CircleStackIcon className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Storage</p>
+                <p className="text-2xl font-bold text-foreground">$state.storageDisplay</p>
+              </div>
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Estimated Cost</CardTitle>
-              <CurrencyDollarIcon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary">$state.priceDisplay</div>
-              <p className="text-xs text-muted-foreground">Billed monthly, cancel anytime</p>
+            <CardContent className="p-6 flex items-center space-x-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <GlobeAltIcon className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Network</p>
+                <p className="text-2xl font-bold text-foreground">10 Gbps</p>
+              </div>
             </CardContent>
           </Card>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-2 space-y-6">
-            <Tabs value={managementTier} onValueChange={setManagementTier} defaultValue="unmanaged" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="unmanaged">Unmanaged VPS</TabsTrigger>
-                <TabsTrigger value="managed">Fully Managed VPS</TabsTrigger>
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <Tabs defaultValue="configure" value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3 mb-6">
+                <TabsTrigger value="configure">Resources</TabsTrigger>
+                <TabsTrigger value="os">Operating System</TabsTrigger>
+                <TabsTrigger value="benchmarks">Benchmarks</TabsTrigger>
               </TabsList>
-              <TabsContent value="unmanaged">
+              <TabsContent value="configure">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Unmanaged Server Specifications</CardTitle>
-                    <CardDescription>Full root access and complete control for experienced sysadmins and developers.</CardDescription>
+                    <CardTitle>Scale Your Resources</CardTitle>
+                    <CardDescription>Drag the sliders to allocate dedicated compute, memory, and storage to your instance.</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Feature</TableHead>
-                          <TableHead>Included</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="font-medium">Root Access</TableCell>
-                          <TableCell>Full SSH Access</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Operating System</TableCell>
-                          <TableCell>User Installed & Managed</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Security & Updates</TableCell>
-                          <TableCell>User Responsibility</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Technical Support</TableCell>
-                          <TableCell>Hardware & Network Only</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
+                  <CardContent className="space-y-10 py-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-base font-semibold">CPU Cores</Label>
+                        <Badge variant="secondary">$state.cpuDisplay</Badge>
+                      </div>
+                      <Slider value={cpuValue} onValueChange={setCpuValue} max={32} min={1} step={1} />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-base font-semibold">Memory (RAM)</Label>
+                        <Badge variant="secondary">$state.ramDisplay</Badge>
+                      </div>
+                      <Slider value={ramValue} onValueChange={setRamValue} max={128} min={2} step={2} />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-base font-semibold">NVMe Storage</Label>
+                        <Badge variant="secondary">$state.storageDisplay</Badge>
+                      </div>
+                      <Slider value={storageValue} onValueChange={setStorageValue} max={2000} min={50} step={50} />
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
-              <TabsContent value="managed">
+              <TabsContent value="os">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Managed Server Specifications</CardTitle>
-                    <CardDescription>We handle the technical heavy lifting so you can focus on your business.</CardDescription>
+                    <CardTitle>Select Operating System</CardTitle>
+                    <CardDescription>Choose a distribution to pre-install on your server. Custom ISOs can be mounted post-deployment.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ToggleGroup type="single" value={osValue} onValueChange={setOsValue} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <ToggleGroupItem value="ubuntu" className="h-32 flex flex-col items-center justify-center gap-2 border-2 data-[state=on]:border-primary data-[state=on]:bg-primary/5">
+                        <ServerIcon className="h-8 w-8" />
+                        <span className="font-medium">Ubuntu 22.04 LTS</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="debian" className="h-32 flex flex-col items-center justify-center gap-2 border-2 data-[state=on]:border-primary data-[state=on]:bg-primary/5">
+                        <ServerIcon className="h-8 w-8" />
+                        <span className="font-medium">Debian 12</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="centos" className="h-32 flex flex-col items-center justify-center gap-2 border-2 data-[state=on]:border-primary data-[state=on]:bg-primary/5">
+                        <ServerIcon className="h-8 w-8" />
+                        <span className="font-medium">CentOS Stream 9</span>
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="benchmarks">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Performance Benchmarks</CardTitle>
+                    <CardDescription>Average scores based on recent Geekbench 6 and FIO tests across our fleet.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Feature</TableHead>
-                          <TableHead>Included</TableHead>
+                          <TableHead>Metric</TableHead>
+                          <TableHead>4 Cores</TableHead>
+                          <TableHead>8 Cores</TableHead>
+                          <TableHead>16 Cores</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         <TableRow>
-                          <TableCell className="font-medium">Root Access</TableCell>
-                          <TableCell>Optional / Upon Request</TableCell>
+                          <TableCell className="font-medium">Geekbench Multi-Core</TableCell>
+                          <TableCell>4,120</TableCell>
+                          <TableCell>7,850</TableCell>
+                          <TableCell>14,200</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell className="font-medium">Operating System</TableCell>
-                          <TableCell>Automated Updates & Patches</TableCell>
+                          <TableCell className="font-medium">Random Read IOPS</TableCell>
+                          <TableCell>85,000</TableCell>
+                          <TableCell>120,000</TableCell>
+                          <TableCell>210,000</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell className="font-medium">Security & Updates</TableCell>
-                          <TableCell>24/7 Proactive Monitoring & Firewall</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Technical Support</TableCell>
-                          <TableCell>Priority Application & Server Support</TableCell>
+                          <TableCell className="font-medium">Network Throughput</TableCell>
+                          <TableCell>2.5 Gbps</TableCell>
+                          <TableCell>5 Gbps</TableCell>
+                          <TableCell>10 Gbps</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -154,76 +181,46 @@ export function Vpshosting() {
           </div>
           <div className="lg:col-span-1">
             <Card className="sticky top-8">
-              <CardHeader>
-                <CardTitle>Configure Server</CardTitle>
-                <CardDescription>Adjust resources to match your workload.</CardDescription>
+              <CardHeader className="bg-muted/50 border-b border-border">
+                <CardTitle>Order Summary</CardTitle>
+                <CardDescription>Real-time estimated pricing based on your configuration.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>CPU Cores</Label>
-                    <span className="text-sm text-muted-foreground">$state.cpuDisplay</span>
-                  </div>
-                  <Slider value={cpuSlider} onValueChange={setCpuSlider} max={32} min={1} step={1} />
+              <CardContent className="pt-6 space-y-4">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">Compute</span>
+                  <span className="font-medium text-foreground">$state.cpuDisplay</span>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>Memory (RAM)</Label>
-                    <span className="text-sm text-muted-foreground">$state.ramDisplay</span>
-                  </div>
-                  <Slider value={ramSlider} onValueChange={setRamSlider} max={128} min={2} step={2} />
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">Memory</span>
+                  <span className="font-medium text-foreground">$state.ramDisplay</span>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>NVMe Storage</Label>
-                    <span className="text-sm text-muted-foreground">$state.storageDisplay</span>
-                  </div>
-                  <Slider value={storageSlider} onValueChange={setStorageSlider} max={2000} min={40} step={40} />
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">Storage</span>
+                  <span className="font-medium text-foreground">$state.storageDisplay</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">OS Image</span>
+                  <span className="font-medium text-foreground capitalize">$state.osValue</span>
                 </div>
                 <Separator className="my-4" />
-                <div className="space-y-3">
-                  <Label>Operating System</Label>
-                  <ToggleGroup type="single" value={os} onValueChange={setOs} className="grid grid-cols-3 gap-2">
-                    <ToggleGroupItem value="ubuntu" variant="outline" className="w-full">Ubuntu</ToggleGroupItem>
-                    <ToggleGroupItem value="centos" variant="outline" className="w-full">CentOS</ToggleGroupItem>
-                    <ToggleGroupItem value="debian" variant="outline" className="w-full">Debian</ToggleGroupItem>
-                  </ToggleGroup>
-                </div>
-                <div className="space-y-3">
-                  <Label>Control Panel</Label>
-                  <Select value={controlPanel} onValueChange={setControlPanel}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Control Panel" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">None (CLI Only)</SelectItem>
-                      <SelectItem value="cpanel">cPanel / WHM</SelectItem>
-                      <SelectItem value="plesk">Plesk Obsidian</SelectItem>
-                      <SelectItem value="webmin">Webmin</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-3">
-                  <Label>Data Center Location</Label>
-                  <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Region" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="us-east">New York, USA (US-East)</SelectItem>
-                      <SelectItem value="us-west">San Francisco, USA (US-West)</SelectItem>
-                      <SelectItem value="eu-central">Frankfurt, DE (EU-Central)</SelectItem>
-                      <SelectItem value="ap-southeast">Singapore (AP-Southeast)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="flex justify-between items-end">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Total Estimated Cost</p>
+                    <p className="text-xs text-muted-foreground mt-1">Billed hourly, cancel anytime.</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-3xl font-bold text-primary">$state.estimatedPrice</span>
+                    <span className="text-sm text-muted-foreground ml-1">/mo</span>
+                  </div>
                 </div>
               </CardContent>
-              <CardFooter className="flex flex-col space-y-4">
-                <Button className="w-full" size="lg" onClick={onCheckout}>Deploy Now</Button>
-                <p className="text-sm text-center text-muted-foreground">
-                  <span>Need something simpler? </span>
-                  <Link className="text-primary hover:underline font-medium" to="/pricing">View standard tiers</Link>
-                </p>
+              <CardFooter className="bg-muted/30 pt-6">
+                <Link className="w-full" to="/support">
+                  <Button size="lg" className="w-full text-base">
+                    <BoltIcon className="mr-2 h-5 w-5" />
+                    <span>Deploy Server</span>
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>

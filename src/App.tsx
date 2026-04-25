@@ -3,9 +3,8 @@ import { SiteNav } from './components/site-nav'
 import { Home } from './pages/index'
 import { Sharedhosting } from './pages/shared-hosting'
 import { Vpshosting } from './pages/vps'
-import { Pricing } from './pages/pricing'
-import { Network } from './pages/network'
-import { Contact } from './pages/contact'
+import { About } from './pages/about'
+import { Support } from './pages/support'
 
 export default function App() {
   return (
@@ -16,9 +15,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/shared-hosting" element={<Sharedhosting />} />
         <Route path="/vps" element={<Vpshosting />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/network" element={<Network />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/support" element={<Support />} />
         <Route path="*" element={<Home />} />
         </Routes>
       </main>

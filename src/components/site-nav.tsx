@@ -7,9 +7,8 @@ const NAV_ITEMS = [
   { to: '/', label: 'Home' },
   { to: '/shared-hosting', label: 'Sharedhosting' },
   { to: '/vps', label: 'Vpshosting' },
-  { to: '/pricing', label: 'Pricing' },
-  { to: '/network', label: 'Network' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/about', label: 'About' },
+  { to: '/support', label: 'Support' },
 ]
 
 export function SiteNav() {
