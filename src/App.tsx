@@ -2,10 +2,11 @@ import { Routes, Route } from 'react-router-dom'
 import { SiteNav } from './components/site-nav'
 import { Home } from './pages/index'
 import { Play } from './pages/play'
-import { Upgrades } from './pages/upgrades'
 import { Leaderboard } from './pages/leaderboard'
+import { Upgrades } from './pages/upgrades'
 import { Achievements } from './pages/achievements'
-import { About } from './pages/about'
+import { Profile } from './pages/profile'
+import { Faq } from './pages/faq'
 
 export default function App() {
   return (
@@ -15,10 +16,11 @@ export default function App() {
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/play" element={<Play />} />
-        <Route path="/upgrades" element={<Upgrades />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/upgrades" element={<Upgrades />} />
         <Route path="/achievements" element={<Achievements />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="*" element={<Home />} />
         </Routes>
       </main>

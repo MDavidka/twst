@@ -1,10 +1,8 @@
-export function startQuickDemo(event: { preventDefault(): void }): void {
+export function handleCookieClick(event: { preventDefault(): void }): void {
   event.preventDefault()
-  window.location.href = '/play'
-}
-
-export function createAccount(event: { preventDefault(): void }): void {
-  event.preventDefault()
-  window.alert('Account created! Progress will be saved automatically.')
-  window.location.href = '/play'
+  const totalCookies = parseFloat(localStorage.getItem('totalCookies') || '0') + 1
+  const clickPower = parseFloat(localStorage.getItem('clickPower') || '1')
+  localStorage.setItem('totalCookies', totalCookies.toString())
+  localStorage.setItem('lastClickTime', Date.now().toString())
+  window.dispatchEvent(new CustomEvent('cookiesUpdated', { detail: { totalCookies, cps: 0 } }))
 }

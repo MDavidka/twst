@@ -1,145 +1,134 @@
 import React from 'react'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Spinner } from '@/components/ui/spinner'
-import { ArrowPathIcon, CloudArrowDownIcon, CloudArrowUpIcon, FingerPrintIcon, FlowerIcon, UserIcon } from '@heroicons/react/24/outline'
-import { clickCookie, saveGame, loadGame, resetGame, buyCursor, buyGrandma, buyFarm } from '@/lib/play-logic'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Slider } from '@/components/ui/slider'
+import { ArrowDownTrayIcon, CheckCircleIcon, CookieIcon, CursorIcon, LightningBoltIcon, LockClosedIcon, ShoppingCartIcon, UserGroupIcon, WheatIcon } from '@heroicons/react/24/outline'
+import { onCookieClick, togglePause, exportSave, buyUpgrade, setBuildingQuantity, buyBuilding } from '@/lib/play-logic'
 
 export function Play() {
   React.useEffect(() => { document.title = "Play" }, [])
-  const [cantAffordCursor, setCantAffordCursor] = React.useState('')
-  const [cantAffordGrandma, setCantAffordGrandma] = React.useState('')
-  const [cantAffordFarm, setCantAffordFarm] = React.useState('')
+  const [buildingQuantities, setBuildingQuantities] = React.useState('')
 
   return (
-    <div className="min-h-screen bg-background text-foreground container mx-auto px-4 py-8 lg:px-8">
-      <div className="grid lg:grid-cols-4 gap-8">
-        <main className="lg:col-span-3 space-y-8">
-          <Card className="text-center p-8">
-            <CardHeader>
-              <CardTitle className="text-4xl lg:text-5xl font-bold tracking-tight">Play</CardTitle>
-              <CardDescription>Click the cookie to earn cookies per second. Buy upgrades to multiply your production!</CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center space-y-6">
-              <div className="relative group">
-                <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full shadow-2xl cursor-pointer transition-all hover:scale-110 active:scale-95 border-8 border-amber-200 group-hover:border-amber-300 p-8 lg:p-12" onClick={clickCookie}>
-                  <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_50%)] rounded-full animate-ping-slow" />
-                  <div className="w-32 h-32 lg:w-40 lg:h-40 bg-amber-200 rounded-full relative flex items-center justify-center">
-                    <div className="text-2xl lg:text-3xl font-bold text-amber-700 drop-shadow-lg">🍪</div>
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/50">
+      <div className="container mx-auto px-4 py-8 lg:px-8 max-w-7xl">
+        <h1 className="text-4xl lg:text-6xl font-bold tracking-tight text-center mb-2 bg-gradient-to-r from-primary to-primary-foreground bg-clip-text text-transparent">Play</h1>
+        <p className="text-xl text-muted-foreground text-center mb-16 max-w-2xl mx-auto">Click the cookie to bake! Buy buildings and upgrades to go idle. Progress auto-saves every 30 seconds.</p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-8 space-y-8">
+            <Card className="overflow-hidden">
+              <CardHeader className="flex flex-row items-center justify-between pb-4">
+                <CardTitle className="text-3xl font-bold">Big Cookie</CardTitle>
+                <div className="text-2xl font-bold text-primary">$state.totalCookies</div>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="relative h-96 lg:h-[500px] flex items-center justify-center bg-gradient-to-b from-secondary to-accent/20">
+                  <Button size="lg" className="h-48 lg:h-64 w-48 lg:w-64 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 group" onClick={onCookieClick}>
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 opacity-75 group-hover:opacity-90 blur-xl -z-10" />
+                    <CookieIcon className="h-32 lg:h-40 w-32 lg:w-40 text-amber-600 group-hover:rotate-12 transition-transform duration-300" />
+                  </Button>
+                </div>
+              </CardContent>
+              <CardFooter className="pt-6">
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full">
+                  <Badge variant="secondary">
+                    <LightningBoltIcon className="h-4 w-4 mr-1" />
+                    <div>CPS: </div>
+                    <div>$state.cookiesPerSecond</div>
+                  </Badge>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={togglePause}>
+                      <div className="h-4 w-4 mr-2" />
+                      <div>$state.isPaused ? 'Resume' : 'Pause'</div>
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={exportSave}>
+                      <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
+                      <div>Export</div>
+                    </Button>
                   </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="text-2xl font-bold text-white drop-shadow-2xl animate-bounce opacity-0 group-hover:opacity-100 transition-opacity">+1</div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Total Cookies</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-3xl font-bold text-primary">$state.totalCookies</CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>
-                      <span>Cookies per Second</span>
-                      <span className="ml-1">
-                        <Spinner className="h-4 w-4 animate-spin" />
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-3xl font-bold text-primary">$state.cps</CardContent>
-                </Card>
-              </div>
-            </CardContent>
-            <CardFooter className="justify-center space-x-4">
-              <Button variant="outline" onClick={saveGame}>
-                <CloudArrowDownIcon className="h-4 w-4 mr-2" />
-                <span>Save</span>
-              </Button>
-              <Button variant="outline" onClick={loadGame}>
-                <CloudArrowUpIcon className="h-4 w-4 mr-2" />
-                <span>Load</span>
-              </Button>
-              <Button variant="destructive" onClick={resetGame}>
-                <ArrowPathIcon className="h-4 w-4 mr-2" />
-                <span>Reset</span>
-              </Button>
-            </CardFooter>
-          </Card>
-        </main>
-        <aside className="lg:col-span-1 sticky top-8 h-fit space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Upgrade Shop</CardTitle>
-              <CardDescription>Buy buildings and cursors to boost your cookie production</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors" onClick={buyCursor}>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                      <FingerPrintIcon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-medium">Cursor</div>
-                      <div className="text-sm text-muted-foreground">Autoclicks once every 10 seconds</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="text-sm font-mono">$state.cursorCost</div>
-                    <Button size="sm" variant="outline" disabled={cantAffordCursor}>Buy</Button>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Upgrades (20+)</CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <Button variant="outline" size="sm" className="h-20 flex flex-col items-center gap-1 p-2" onClick={buyUpgrade} data-upgrade="cursor">
+                  <CursorIcon className="h-8 w-8" />
+                  <div className="text-xs font-medium">Cursor</div>
+                  <div className="text-xs text-muted-foreground">$state.upgradeCosts.cursor</div>
+                </Button>
+                <Button variant="outline" size="sm" className="h-20 flex flex-col items-center gap-1 p-2" onClick={buyUpgrade} data-upgrade="grandma">
+                  <UserGroupIcon className="h-8 w-8" />
+                  <div className="text-xs font-medium">Grandma</div>
+                  <div className="text-xs text-muted-foreground">$state.upgradeCosts.grandma</div>
+                </Button>
+                <Button variant="outline" size="sm" className="h-20 flex flex-col items-center gap-1 p-2" onClick={buyUpgrade} data-upgrade="farm">
+                  <WheatIcon className="h-8 w-8" />
+                  <div className="text-xs font-medium">Farm</div>
+                  <div className="text-xs text-muted-foreground">$state.upgradeCosts.farm</div>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="lg:col-span-4 lg:sticky lg:top-8 space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Buildings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-center justify-between text-sm">
+                  <div>Cursor x10</div>
+                  <div className="flex items-center gap-2">
+                    <Slider value={buildingQuantities} max={100} step={1} onValueChange={setBuildingQuantity} data-building="cursor" />
+                    <div>$state.buildingQuantities[0]</div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors" onClick={buyGrandma}>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                      <UserIcon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-medium">Grandma</div>
-                      <div className="text-sm text-muted-foreground">A nice grandma to bake more cookies</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="text-sm font-mono">$state.grandmaCost</div>
-                    <Button size="sm" variant="outline" disabled={cantAffordGrandma}>Buy</Button>
-                  </div>
+                <Button className="w-full" onClick={buyBuilding} data-building="cursor">
+                  <ShoppingCartIcon className="h-4 w-4 mr-2" />
+                  <div>Buy ($state.buildingCosts.cursor)</div>
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Stats</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-sm">
+                <div className="flex justify-between">
+                  <div>Total baked</div>
+                  <div>$state.totalBaked</div>
                 </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors" onClick={buyFarm}>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                      <FlowerIcon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-medium">Farm</div>
-                      <div className="text-sm text-muted-foreground">Grows cookie plants</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="text-sm font-mono">$state.farmCost</div>
-                    <Button size="sm" variant="outline" disabled={cantAffordFarm}>Buy</Button>
-                  </div>
+                <div className="flex justify-between">
+                  <div>Time played</div>
+                  <div>$state.timePlayed</div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Achievements</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex items-center space-x-3 p-2 bg-green-50 border border-green-200 rounded-md">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span className="text-sm font-medium text-green-900">First cookie clicked! 🎉</span>
-              </div>
-              <div className="flex items-center space-x-3 p-2 bg-blue-50 border border-blue-200 rounded-md">
-                <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                <span className="text-sm font-medium text-blue-900">Bought your first cursor</span>
-              </div>
-            </CardContent>
-          </Card>
-        </aside>
+                <div className="flex justify-between">
+                  <div>Clicks</div>
+                  <div>$state.totalClicks</div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Achievements</CardTitle>
+                <Badge variant="secondary">$state.achievementsUnlocked.length / 50</Badge>
+              </CardHeader>
+              <CardContent className="space-y-2 max-h-48 overflow-y-auto">
+                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent bg-primary/10">
+                  <CheckCircleIcon className="h-5 w-5 text-primary flex-shrink-0" />
+                  <div>First cookie</div>
+                </div>
+                <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent opacity-50">
+                  <LockClosedIcon className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                  <div>Buy 1 cursor</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   )
