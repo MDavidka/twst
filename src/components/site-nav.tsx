@@ -5,9 +5,10 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
-  { to: '/hosting', label: 'Hosting' },
-  { to: '/domains', label: 'Domains' },
-  { to: '/about', label: 'About' },
+  { to: '/shared-hosting', label: 'Sharedhosting' },
+  { to: '/vps', label: 'Vpshosting' },
+  { to: '/pricing', label: 'Pricing' },
+  { to: '/network', label: 'Network' },
   { to: '/contact', label: 'Contact' },
 ]
 
