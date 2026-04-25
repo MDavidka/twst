@@ -1,8 +1,15 @@
-export function handleCookieClick(event: { preventDefault(): void }): void {
+export function onAddToCart(event: { preventDefault(): void }): void {
   event.preventDefault()
-  const totalCookies = parseFloat(localStorage.getItem('totalCookies') || '0') + 1
-  const clickPower = parseFloat(localStorage.getItem('clickPower') || '1')
-  localStorage.setItem('totalCookies', totalCookies.toString())
-  localStorage.setItem('lastClickTime', Date.now().toString())
-  window.dispatchEvent(new CustomEvent('cookiesUpdated', { detail: { totalCookies, cps: 0 } }))
+  window.alert('Device added to your cart!')
+}
+
+export function onSubscribe(event: { preventDefault(): void, target: unknown }): void {
+  event.preventDefault()
+  try {
+    const form = event.target as HTMLFormElement
+    window.alert('Thanks for subscribing! Check your email for your 10% discount code.')
+    form.reset()
+  } catch (error) {
+    window.alert('Something went wrong. Please try again.')
+  }
 }

@@ -5,12 +5,10 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 
 const NAV_ITEMS = [
   { to: '/', label: 'Home' },
-  { to: '/play', label: 'Play' },
-  { to: '/leaderboard', label: 'Leaderboard' },
-  { to: '/upgrades', label: 'Upgrades' },
-  { to: '/achievements', label: 'Achievements' },
-  { to: '/profile', label: 'Profile' },
-  { to: '/faq', label: 'Faq' },
+  { to: '/shop', label: 'Shop' },
+  { to: '/compare', label: 'Compare' },
+  { to: '/cart', label: 'Cart' },
+  { to: '/support', label: 'Support' },
 ]
 
 export function SiteNav() {

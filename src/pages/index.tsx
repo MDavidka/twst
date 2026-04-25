@@ -1,297 +1,287 @@
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { ActivityIcon, ArrowRightIcon, BoltIcon, CakeIcon, CheckIcon, CurrencyDollarIcon, EyeIcon, FingerPrintIcon, MousePointerClickIcon, PlayIcon, ShoppingCartIcon, SparklesIcon, UsersIcon } from '@heroicons/react/24/outline'
-import { handleCookieClick } from '@/lib/index-logic'
+import { InputGroup, InputGroupButton, InputGroupInput } from '@/components/ui/input-group'
+import { Link } from 'react-router-dom'
+import { ArrowRightIcon, ArrowUturnLeftIcon, ChatBubbleLeftRightIcon, DevicePhoneMobileIcon, ShoppingCartIcon, SparklesIcon, TruckIcon } from '@heroicons/react/24/outline'
+import { onAddToCart, onSubscribe } from '@/lib/index-logic'
 
 export function Home() {
   React.useEffect(() => { document.title = "Home" }, [])
+  const [newsletterEmail, setNewsletterEmail] = React.useState('')
 
   return (
-    <div>
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 bg-gradient-to-br from-background to-secondary/30">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="space-y-8 lg:space-y-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-destructive bg-clip-text text-transparent">Cookie Clicker</h1>
-            <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed">Bake infinite cookies through addictive clicking mechanics. Unlock auto-clickers, grandma farms, and legendary upgrades to reach quadrillions.</p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-8">
-              <Button size="lg" className="text-lg px-8 py-6 shadow-2xl">
-                <PlayIcon className="h-6 w-6 mr-2" />
-                <div>Play Now</div>
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-                <ArrowRightIcon className="h-6 w-6 mr-2" />
-                <div>View Leaderboard</div>
-              </Button>
-            </div>
-            <div className="flex items-center gap-6 pt-4">
-              <div className="flex items-center gap-2 text-sm">
-                <ActivityIcon className="h-5 w-5 text-primary" />
-                <div>$state.cps</div>
-                <span>cookies/sec</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <CurrencyDollarIcon className="h-5 w-5 text-primary" />
-                <div>$state.totalCookies</div>
-                <span>total baked</span>
-              </div>
-            </div>
-          </div>
-          <div className="relative">
-            <div className="relative mx-auto w-80 h-80 lg:w-96 lg:h-96">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-destructive/20 rounded-3xl blur-xl animate-pulse" />
-              <div className="relative w-full h-full p-8" role="button" onClick={handleCookieClick}>
-                <div className="w-full h-full bg-gradient-to-br from-amber-400 to-orange-500 rounded-full shadow-2xl border-8 border-primary/30 hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center group">
-                  <div className="text-6xl group-hover:scale-110 transition-transform">🍪</div>
-                  <div className="absolute -top-4 -right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-xs font-bold animate-bounce">$state.clickPower</div>
+    <div className="min-h-screen bg-background flex flex-col w-full">
+      <section className="w-full relative">
+        <Carousel className="w-full" opts="[object Object]">
+          <CarouselContent>
+            <CarouselItem>
+              <div className="relative w-full h-[85vh] min-h-[600px] flex items-center bg-zinc-950 text-white overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-900/90 to-transparent z-0" />
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-20 md:opacity-40 z-0">
+                  <DevicePhoneMobileIcon className="w-[800px] h-[800px] text-primary" />
+                </div>
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                  <Badge variant="secondary" className="mb-6 bg-primary/20 text-primary hover:bg-primary/30 border-none px-3 py-1 text-sm">Just Released</Badge>
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 max-w-3xl leading-tight">The New Titan Pro.</h1>
+                  <p className="text-lg md:text-2xl text-zinc-300 mb-10 max-w-2xl font-light">Beyond boundaries. Featuring the revolutionary quantum processor, all-day battery life, and a pro-grade cinematic camera system.</p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button size="lg" className="text-lg px-8 h-14" asChild>
+                      <Link to="/shop">Buy Now</Link>
+                    </Button>
+                    <Button variant="outline" size="lg" className="text-lg px-8 h-14 bg-transparent border-zinc-700 text-white hover:bg-white hover:text-zinc-950" asChild>
+                      <Link to="/compare">Compare Specs</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4">How to Play</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Master the addictive click → buy → upgrade loop in 3 simple steps</p>
-        </div>
-        <Carousel opts={"{\"loop\": true, \"dragFree\": true}"}>
-          <CarouselContent className="-ml-4 md:-ml-8">
-            <CarouselItem>
-              <Card className="w-[300px] sm:w-[400px] ml-4 md:ml-8 bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2">
-                    <MousePointerClickIcon className="h-8 w-8" />
-                    <div>1. Click the Cookie</div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <p>Click the giant cookie to earn cookies. Each click produces more as you upgrade.</p>
-                </CardContent>
-              </Card>
             </CarouselItem>
             <CarouselItem>
-              <Card className="w-[300px] sm:w-[400px] ml-4 md:ml-8 bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2">
-                    <ShoppingCartIcon className="h-8 w-8" />
-                    <div>2. Buy Buildings</div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <p>Spend cookies on Cursors, Grandmas, Farms, and Factories that produce cookies automatically.</p>
-                </CardContent>
-              </Card>
-            </CarouselItem>
-            <CarouselItem>
-              <Card className="w-[300px] sm:w-[400px] ml-4 md:ml-8 bg-card/80 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2">
-                    <SparklesIcon className="h-8 w-8" />
-                    <div>3. Unlock Upgrades</div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <p>Powerful upgrades multiply your clicking power and boost all building production.</p>
-                </CardContent>
-              </Card>
+              <div className="relative w-full h-[85vh] min-h-[600px] flex items-center bg-zinc-100 text-zinc-950 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-zinc-100 via-zinc-100/90 to-transparent z-0" />
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                  <Badge variant="default" className="mb-6 px-3 py-1 text-sm">Best Seller</Badge>
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 max-w-3xl leading-tight">Foldable Future.</h1>
+                  <p className="text-lg md:text-2xl text-zinc-600 mb-10 max-w-2xl font-light">Unfold infinite possibilities. The thinnest foldable device on the market with a seamless dual-display experience.</p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button size="lg" className="text-lg px-8 h-14" asChild>
+                      <Link to="/shop">Shop Foldables</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </CarouselItem>
           </CarouselContent>
-          <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-primary/90 text-primary-foreground" />
-          <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-primary/90 text-primary-foreground" />
+          <CarouselPrevious className="left-4 md:left-8 hidden md:flex" />
+          <CarouselNext className="right-4 md:right-8 hidden md:flex" />
         </Carousel>
       </section>
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-secondary/20">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4">Featured Upgrades</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">Hover to preview upgrade effects and unlock requirements</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <FingerPrintIcon className="h-6 w-6" />
-                <div>Reinforced Index Finger</div>
-              </CardTitle>
-              <CardDescription>Cursor production +1%</CardDescription>
-            </CardHeader>
-            <CardContent className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold">150</div>
-                <p className="text-xs text-muted-foreground">cookies</p>
-              </div>
-              <Tooltip delayDuration={500}>
-                <TooltipTrigger asChild>
-                  <Badge variant="outline">
-                    <EyeIcon className="h-4 w-4 mr-1" />
-                    <div>Preview</div>
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent side="top">
-                  <p>+1% cursor production. Unlocks at 1 cursor owned.</p>
-                </TooltipContent>
-              </Tooltip>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <CakeIcon className="h-6 w-6" />
-                <div>Caramelizer</div>
-              </CardTitle>
-              <CardDescription>All production +1%</CardDescription>
-            </CardHeader>
-            <CardContent className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold">1,000</div>
-                <p className="text-xs text-muted-foreground">cookies</p>
-              </div>
-              <Badge variant="outline">
-                <EyeIcon className="h-4 w-4 mr-1" />
-                <div>Preview</div>
-              </Badge>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <BoltIcon className="h-6 w-6" />
-                <div>Lucky Cookie</div>
-              </CardTitle>
-              <CardDescription>Instant 10% production boost</CardDescription>
-            </CardHeader>
-            <CardContent className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold">77,777</div>
-                <p className="text-xs text-muted-foreground">cookies</p>
-              </div>
-              <Badge variant="outline">
-                <EyeIcon className="h-4 w-4 mr-1" />
-                <div>Preview</div>
-              </Badge>
-            </CardContent>
-          </Card>
+      <div className="w-full bg-primary py-3 px-4 text-center">
+        <p className="text-primary-foreground text-sm md:text-base font-medium flex items-center justify-center gap-2">
+          <SparklesIcon className="h-4 w-4" />
+          <span>Spring Sale: Up to 20% off selected flagship devices. Limited time only.</span>
+          <Link className="underline underline-offset-4 ml-2 font-bold hover:text-white" to="/shop">Shop now</Link>
+        </p>
+      </div>
+      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full border-b border-border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center">
+          <div className="flex flex-col items-center">
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 text-primary">
+              <TruckIcon className="h-7 w-7" />
+            </div>
+            <h3 className="text-xl font-bold mb-2 text-foreground">Free Expedited Shipping</h3>
+            <p className="text-muted-foreground leading-relaxed">Get your new device delivered safely to your door in 1-2 business days, completely free of charge.</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 text-primary">
+              <ArrowUturnLeftIcon className="h-7 w-7" />
+            </div>
+            <h3 className="text-xl font-bold mb-2 text-foreground">30-Day Easy Returns</h3>
+            <p className="text-muted-foreground leading-relaxed">Not completely satisfied? Return your device within 30 days for a full refund, no questions asked.</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 text-primary">
+              <ChatBubbleLeftRightIcon className="h-7 w-7" />
+            </div>
+            <h3 className="text-xl font-bold mb-2 text-foreground">24/7 Expert Support</h3>
+            <p className="text-muted-foreground leading-relaxed">Our technical specialists are always on standby to help you set up or troubleshoot your new phone.</p>
+          </div>
         </div>
       </section>
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          <div className="space-y-8">
-            <h2 className="text-3xl lg:text-4xl font-bold tracking-tight">Top Players Right Now</h2>
-            <p className="text-xl text-muted-foreground">Join the ranks of Cookie Clicker legends</p>
-            <div className="pt-6">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-12">#</TableHead>
-                    <TableHead>Player</TableHead>
-                    <TableHead />
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium text-destructive">🥇</TableCell>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <span>$state.topPlayer1</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Badge>$state.topPlayer1Cps</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium text-orange-500">🥈</TableCell>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} />
-                          <AvatarFallback>AB</AvatarFallback>
-                        </Avatar>
-                        <span>$state.topPlayer2</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Badge>$state.topPlayer2Cps</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium text-amber-500">🥉</TableCell>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={"https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} />
-                          <AvatarFallback>CD</AvatarFallback>
-                        </Avatar>
-                        <span>$state.topPlayer3</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Badge>$state.topPlayer3Cps</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>4</TableCell>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} />
-                          <AvatarFallback>EF</AvatarFallback>
-                        </Avatar>
-                        <span>$state.topPlayer4</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Badge>$state.topPlayer4Cps</Badge>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+      <section className="py-20 bg-muted/40 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-end mb-10">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">Featured Devices</h2>
+              <p className="text-muted-foreground mt-2 text-lg">Our top-selling smartphones this week.</p>
             </div>
-            <Button variant="outline" className="mt-6 w-full lg:w-auto">
-              <div>View Full Leaderboard →</div>
+            <Button variant="ghost" className="hidden sm:flex hover:bg-transparent hover:text-primary" asChild>
+              <Link to="/shop">
+                <span>View all catalog</span>
+                <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Ready to crush cookies?</CardTitle>
-              <CardDescription>Join 1M+ players in the ultimate idle clicking challenge</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center gap-2 text-2xl font-bold text-primary">
-                <UsersIcon className="h-8 w-8" />
-                <div>1,234,567</div>
-                <span className="text-muted-foreground text-lg font-normal">players online</span>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckIcon className="h-4 w-4 text-green-500" />
-                  <div>Save progress automatically</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="group overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+              <CardHeader className="p-0 relative bg-zinc-100">
+                <AspectRatio ratio={0.8}>
+                  <div className="w-full h-full flex items-center justify-center p-8">
+                    <DevicePhoneMobileIcon className="w-full h-full text-zinc-300 group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                </AspectRatio>
+                <Badge className="absolute top-4 left-4 z-10">Bestseller</Badge>
+              </CardHeader>
+              <CardContent className="p-6 flex-1">
+                <CardTitle className="line-clamp-1 text-xl">Titan Pro Max</CardTitle>
+                <CardDescription className="mt-1">256GB, Midnight Black</CardDescription>
+                <p className="text-xl font-bold mt-4 text-foreground">$1,099.00</p>
+              </CardContent>
+              <CardFooter className="p-6 pt-0">
+                <Button className="w-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity" onClick={onAddToCart}>
+                  <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                  <span>Add to Cart</span>
+                </Button>
+              </CardFooter>
+            </Card>
+            <Card className="group overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+              <CardHeader className="p-0 relative bg-zinc-100">
+                <AspectRatio ratio={0.8}>
+                  <div className="w-full h-full flex items-center justify-center p-8">
+                    <DevicePhoneMobileIcon className="w-full h-full text-zinc-300 group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                </AspectRatio>
+                <Badge variant="secondary" className="absolute top-4 left-4 z-10">Sale</Badge>
+              </CardHeader>
+              <CardContent className="p-6 flex-1">
+                <CardTitle className="line-clamp-1 text-xl">Galaxy Z Fold 5</CardTitle>
+                <CardDescription className="mt-1">512GB, Phantom Black</CardDescription>
+                <div className="flex items-center gap-2 mt-4">
+                  <p className="text-xl font-bold text-foreground">$1,599.00</p>
+                  <p className="text-sm text-muted-foreground line-through">$1,799.00</p>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckIcon className="h-4 w-4 text-green-500" />
-                  <div>100+ achievements</div>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CheckIcon className="h-4 w-4 text-green-500" />
-                  <div>Global leaderboards</div>
-                </div>
-              </div>
-              <Button size="lg" className="w-full">
-                <PlayIcon className="h-5 w-5 mr-2" />
-                <div>Start Baking</div>
-              </Button>
-            </CardContent>
-          </Card>
+              </CardContent>
+              <CardFooter className="p-6 pt-0">
+                <Button className="w-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity" onClick={onAddToCart}>
+                  <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                  <span>Add to Cart</span>
+                </Button>
+              </CardFooter>
+            </Card>
+            <Card className="group overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+              <CardHeader className="p-0 relative bg-zinc-100">
+                <AspectRatio ratio={0.8}>
+                  <div className="w-full h-full flex items-center justify-center p-8">
+                    <DevicePhoneMobileIcon className="w-full h-full text-zinc-300 group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                </AspectRatio>
+              </CardHeader>
+              <CardContent className="p-6 flex-1">
+                <CardTitle className="line-clamp-1 text-xl">Pixel 8 Pro</CardTitle>
+                <CardDescription className="mt-1">128GB, Bay Blue</CardDescription>
+                <p className="text-xl font-bold mt-4 text-foreground">$999.00</p>
+              </CardContent>
+              <CardFooter className="p-6 pt-0">
+                <Button className="w-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity" onClick={onAddToCart}>
+                  <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                  <span>Add to Cart</span>
+                </Button>
+              </CardFooter>
+            </Card>
+            <Card className="group overflow-hidden flex flex-col hover:border-primary/50 transition-colors">
+              <CardHeader className="p-0 relative bg-zinc-100">
+                <AspectRatio ratio={0.8}>
+                  <div className="w-full h-full flex items-center justify-center p-8">
+                    <DevicePhoneMobileIcon className="w-full h-full text-zinc-300 group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                </AspectRatio>
+              </CardHeader>
+              <CardContent className="p-6 flex-1">
+                <CardTitle className="line-clamp-1 text-xl">OnePlus 12</CardTitle>
+                <CardDescription className="mt-1">256GB, Emerald</CardDescription>
+                <p className="text-xl font-bold mt-4 text-foreground">$799.00</p>
+              </CardContent>
+              <CardFooter className="p-6 pt-0">
+                <Button className="w-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity" onClick={onAddToCart}>
+                  <ShoppingCartIcon className="mr-2 h-4 w-4" />
+                  <span>Add to Cart</span>
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+          <div className="mt-10 sm:hidden flex justify-center">
+            <Button variant="outline" className="w-full" asChild>
+              <Link to="/shop">View all catalog</Link>
+            </Button>
+          </div>
         </div>
+      </section>
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <h2 className="text-2xl font-bold text-center mb-10 text-foreground">Shop by Brand</h2>
+        <Carousel opts="[object Object]" className="w-full">
+          <CarouselContent className="-ml-4">
+            <CarouselItem className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <Link to="/shop">
+                <Card className="hover:border-primary transition-colors cursor-pointer group">
+                  <CardContent className="flex flex-col items-center justify-center p-8 aspect-square">
+                    <div className="text-4xl font-black text-muted-foreground group-hover:text-foreground transition-colors">Apple</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+            <CarouselItem className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <Link to="/shop">
+                <Card className="hover:border-primary transition-colors cursor-pointer group">
+                  <CardContent className="flex flex-col items-center justify-center p-8 aspect-square">
+                    <div className="text-4xl font-black text-muted-foreground group-hover:text-foreground transition-colors tracking-tighter">SAMSUNG</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+            <CarouselItem className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <Link to="/shop">
+                <Card className="hover:border-primary transition-colors cursor-pointer group">
+                  <CardContent className="flex flex-col items-center justify-center p-8 aspect-square">
+                    <div className="text-4xl font-black text-muted-foreground group-hover:text-foreground transition-colors">Google</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+            <CarouselItem className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <Link to="/shop">
+                <Card className="hover:border-primary transition-colors cursor-pointer group">
+                  <CardContent className="flex flex-col items-center justify-center p-8 aspect-square">
+                    <div className="text-4xl font-black text-muted-foreground group-hover:text-foreground transition-colors text-red-600/50 group-hover:text-red-600">ONEPLUS</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+            <CarouselItem className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+              <Link to="/shop">
+                <Card className="hover:border-primary transition-colors cursor-pointer group">
+                  <CardContent className="flex flex-col items-center justify-center p-8 aspect-square">
+                    <div className="text-4xl font-black text-muted-foreground group-hover:text-foreground transition-colors italic">Motorola</div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </section>
+      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mb-10">
+        <Card className="bg-primary text-primary-foreground border-none overflow-hidden relative shadow-2xl">
+          <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-black/10 rounded-full blur-2xl pointer-events-none" />
+          <CardContent className="p-10 md:p-16 flex flex-col items-center text-center relative z-10">
+            <div className="flex items-center justify-center -space-x-3 mb-8">
+              <Avatar className="border-2 border-primary w-12 h-12">
+                <AvatarFallback className="bg-zinc-200 text-zinc-900 text-sm font-bold">JD</AvatarFallback>
+              </Avatar>
+              <Avatar className="border-2 border-primary w-12 h-12">
+                <AvatarFallback className="bg-zinc-300 text-zinc-900 text-sm font-bold">AL</AvatarFallback>
+              </Avatar>
+              <Avatar className="border-2 border-primary w-12 h-12">
+                <AvatarFallback className="bg-zinc-400 text-zinc-900 text-sm font-bold">MK</AvatarFallback>
+              </Avatar>
+              <Avatar className="border-2 border-primary w-12 h-12">
+                <AvatarFallback className="bg-zinc-100 text-zinc-900 text-sm font-bold">10k+</AvatarFallback>
+              </Avatar>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Join 10,000+ happy customers</h2>
+            <p className="text-primary-foreground/90 max-w-2xl mb-10 text-lg md:text-xl">Subscribe to our newsletter to receive an instant 10% discount code, early access to flagship pre-orders, and expert tech guides.</p>
+            <form className="w-full max-w-md" onSubmit={onSubscribe}>
+              <InputGroup className="bg-white/10 border border-white/20 rounded-md p-1 backdrop-blur-sm">
+                <InputGroupInput type="email" placeholder="Enter your email address..." value={newsletterEmail} onChange={setNewsletterEmail} className="bg-transparent text-primary-foreground placeholder:text-primary-foreground/60 border-none focus-visible:ring-0 focus-visible:ring-offset-0 h-12 px-4 text-base" />
+                <InputGroupButton type="submit" variant="secondary" className="text-primary font-bold h-12 px-6 hover:bg-white/90">Subscribe</InputGroupButton>
+              </InputGroup>
+            </form>
+            <p className="text-sm text-primary-foreground/70 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+          </CardContent>
+        </Card>
       </section>
     </div>
   )

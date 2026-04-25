@@ -11,35 +11,35 @@
     --card-foreground: 0 0% 6.3%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 6.3%;
-    --primary: 38 95% 45%;
+    --primary: 84 80% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 38 45% 96%;
+    --secondary: 84 30% 96%;
     --secondary-foreground: 0 0% 6.3%;
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
-    --accent: 38 45% 96%;
+    --accent: 84 30% 96%;
     --accent-foreground: 0 0% 6.3%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 38 95% 45%;
+    --ring: 84 80% 45%;
     --radius: 0.5rem;
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 0 0% 6.3%;
-    --sidebar-primary: 38 95% 45%;
+    --sidebar-primary: 84 80% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 38 45% 96%;
+    --sidebar-accent: 84 30% 96%;
     --sidebar-accent-foreground: 0 0% 6.3%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 38 95% 45%;
-    --chart-1: 38 95% 45%;
-    --chart-2: 38 75% 60%;
-    --chart-3: 38 55% 70%;
+    --sidebar-ring: 84 80% 45%;
+    --chart-1: 84 80% 45%;
+    --chart-2: 84 60% 60%;
+    --chart-3: 84 40% 70%;
     --chart-4: 0 0% 80%;
     --chart-5: 0 0% 90%;
-    --font-heading: 'Fraunces', ui-serif;
-    --font-body: 'Inter', ui-sans-serif;
+    --font-heading: 'Outfit', ui-sans-serif;
+    --font-body: 'Outfit', ui-sans-serif;
   }
 
   .dark {
@@ -50,30 +50,30 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 6.3%;
     --popover-foreground: 0 0% 98%;
-    --primary: 38 95% 65%;
+    --primary: 84 80% 65%;
     --primary-foreground: 0 0% 6.3%;
-    --secondary: 38 35% 14%;
+    --secondary: 84 20% 14%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 65%;
-    --accent: 38 35% 14%;
+    --accent: 84 20% 14%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 63% 30%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 16%;
     --input: 0 0% 16%;
-    --ring: 38 95% 65%;
+    --ring: 84 80% 65%;
     --sidebar-background: 0 0% 6.3%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 38 95% 65%;
+    --sidebar-primary: 84 80% 65%;
     --sidebar-primary-foreground: 0 0% 6.3%;
-    --sidebar-accent: 38 35% 14%;
+    --sidebar-accent: 84 20% 14%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 16%;
-    --sidebar-ring: 38 95% 65%;
-    --chart-1: 38 95% 65%;
-    --chart-2: 38 75% 50%;
-    --chart-3: 38 55% 35%;
+    --sidebar-ring: 84 80% 65%;
+    --chart-1: 84 80% 65%;
+    --chart-2: 84 60% 50%;
+    --chart-3: 84 40% 35%;
     --chart-4: 0 0% 30%;
     --chart-5: 0 0% 16%;
   }
@@ -83,10 +83,10 @@
   * { @apply border-border; }
   html, body { @apply bg-background text-foreground; }
   body {
-    font-family: var(--font-body, 'Inter', ui-sans-serif);
+    font-family: var(--font-body, 'Outfit', ui-sans-serif);
     min-height: 100vh;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading, 'Fraunces', ui-serif);
+    font-family: var(--font-heading, 'Outfit', ui-sans-serif);
   }
 }

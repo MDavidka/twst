@@ -1,12 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
 import { SiteNav } from './components/site-nav'
 import { Home } from './pages/index'
-import { Play } from './pages/play'
-import { Leaderboard } from './pages/leaderboard'
-import { Upgrades } from './pages/upgrades'
-import { Achievements } from './pages/achievements'
-import { Profile } from './pages/profile'
-import { Faq } from './pages/faq'
+import { Shop } from './pages/shop'
+import { Compare } from './pages/compare'
+import { Cart } from './pages/cart'
+import { Support } from './pages/support'
 
 export default function App() {
   return (
@@ -15,12 +13,10 @@ export default function App() {
       <main className="flex-1">
         <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/play" element={<Play />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/upgrades" element={<Upgrades />} />
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/compare" element={<Compare />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/support" element={<Support />} />
         <Route path="*" element={<Home />} />
         </Routes>
       </main>
