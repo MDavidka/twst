@@ -1,0 +1,28 @@
+{
+  "nav": [
+    {
+      "to": "/",
+      "label": "Home"
+    },
+    {
+      "to": "/products",
+      "label": "Products"
+    },
+    {
+      "to": "/deals",
+      "label": "Deals"
+    },
+    {
+      "to": "/about",
+      "label": "About"
+    },
+    {
+      "to": "/contact",
+      "label": "Contact"
+    },
+    {
+      "to": "/support",
+      "label": "Support"
+    }
+  ]
+}

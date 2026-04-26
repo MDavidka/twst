@@ -1,21 +1,24 @@
 import { Routes, Route } from 'react-router-dom'
 import { SiteNav } from './components/site-nav'
+import siteStructure from './data/site-structure.json'
 import { Home } from './pages/index'
-import { Shop } from './pages/shop'
-import { Compare } from './pages/compare'
-import { Cart } from './pages/cart'
+import { Products } from './pages/products'
+import { Deals } from './pages/deals'
+import { About } from './pages/about'
+import { Contact } from './pages/contact'
 import { Support } from './pages/support'
 
 export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <SiteNav />
+      <SiteNav items={siteStructure.nav} />
       <main className="flex-1">
         <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/compare" element={<Compare />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/deals" element={<Deals />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/support" element={<Support />} />
         <Route path="*" element={<Home />} />
         </Routes>

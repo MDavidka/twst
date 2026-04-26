@@ -1,216 +1,197 @@
 import React from 'react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Field, FieldContent, FieldDescription, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { ChatBubbleLeftEllipsisIcon, ChatBubbleLeftRightIcon, CheckCircleIcon, DocumentDuplicateIcon, PhoneIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { onCopyEmail, onStartChat, onCopyPhone, onSubmitContactForm, onNameChange, onEmailChange, onOrderChange, onMessageChange, onToggleLiveChat } from '@/lib/support-logic'
+import { CircleStackIcon, DocumentCheckIcon, DocumentTextIcon, MapPinIcon, MessageCircleIcon, SearchIcon, TruckIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
+import { trackOrder, submitWarrantyClaim, setReceiptFile, scheduleAppointment, downloadManual, openChat } from '@/lib/support-logic'
 
 export function Support() {
   React.useEffect(() => { document.title = "Support" }, [])
-  const [contactName, setContactName] = React.useState('')
-  const [contactEmail, setContactEmail] = React.useState('')
-  const [contactOrder, setContactOrder] = React.useState('')
-  const [contactMessage, setContactMessage] = React.useState('')
+  const [orderQuery, setOrderQuery] = React.useState('')
+  const [model, setModel] = React.useState('')
+  const [issueDescription, setIssueDescription] = React.useState('')
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      <section className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">Support</h1>
-        <p className="mt-4 text-xl text-muted-foreground">We're here to help. Choose the best way to reach us or browse our resources below.</p>
-      </section>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="flex flex-col">
-            <CardHeader>
-              <CardTitle>Email Support</CardTitle>
-              <CardDescription>Best for detailed inquiries and attachments.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-2xl font-semibold text-foreground">support@phonewebshop.com</p>
-              <p className="text-sm text-muted-foreground mt-2">Response within 24 hours.</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full" variant="outline" onClick={onCopyEmail}>
-                <DocumentDuplicateIcon className="w-4 h-4 mr-2" />
-                <span>Copy Email</span>
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className="flex flex-col border-primary shadow-lg relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <Badge variant="default" className="px-3 py-1 text-xs uppercase tracking-wider">Fastest Response</Badge>
-            </div>
-            <CardHeader>
-              <CardTitle>Live Chat</CardTitle>
-              <CardDescription>Real-time assistance for quick questions.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-2xl font-semibold text-foreground">Available 24/7</p>
-              <p className="text-sm text-muted-foreground mt-2">{"Average wait time: < 2 mins."}</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full" variant="default" onClick={onStartChat}>
-                <ChatBubbleLeftRightIcon className="w-4 h-4 mr-2" />
-                <span>Start Chat</span>
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className="flex flex-col">
-            <CardHeader>
-              <CardTitle>Phone Support</CardTitle>
-              <CardDescription>Speak directly with a support agent.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-2xl font-semibold text-foreground">1-800-555-0199</p>
-              <p className="text-sm text-muted-foreground mt-2">Mon-Fri, 9am - 6pm EST.</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full" variant="outline" onClick={onCopyPhone}>
-                <PhoneIcon className="w-4 h-4 mr-2" />
-                <span>Copy Phone</span>
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </section>
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle>Support & Warranty Coverage</CardTitle>
-            <CardDescription>Compare what's included in our standard and premium plans.</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0 overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[40%] pl-6">Feature</TableHead>
-                  <TableHead className="text-center">Standard (1 Year)</TableHead>
-                  <TableHead className="text-center pr-6">Premium Protect (+2 Years)</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium pl-6">Hardware Defect Coverage</TableCell>
-                  <TableCell className="text-center">
-                    <CheckCircleIcon className="w-5 h-5 text-primary mx-auto" />
-                  </TableCell>
-                  <TableCell className="text-center pr-6">
-                    <CheckCircleIcon className="w-5 h-5 text-primary mx-auto" />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium pl-6">24/7 Technical Support</TableCell>
-                  <TableCell className="text-center">
-                    <CheckCircleIcon className="w-5 h-5 text-primary mx-auto" />
-                  </TableCell>
-                  <TableCell className="text-center pr-6">
-                    <CheckCircleIcon className="w-5 h-5 text-primary mx-auto" />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium pl-6">Accidental Damage Protection</TableCell>
-                  <TableCell className="text-center">
-                    <XMarkIcon className="w-5 h-5 text-muted-foreground mx-auto" />
-                  </TableCell>
-                  <TableCell className="text-center pr-6">
-                    <CheckCircleIcon className="w-5 h-5 text-primary mx-auto" />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium pl-6 pb-4">Free Battery Replacement</TableCell>
-                  <TableCell className="text-center text-muted-foreground text-sm pb-4">Under 80% capacity</TableCell>
-                  <TableCell className="text-center text-muted-foreground text-sm pr-6 pb-4">Any time</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </section>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-        <div>
-          <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="shipping">
-              <AccordionTrigger>What are your shipping timelines?</AccordionTrigger>
-              <AccordionContent>Standard shipping takes 3-5 business days. Expedited shipping is available at checkout for 1-2 day delivery. Orders placed before 2 PM EST ship the same day.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="returns">
-              <AccordionTrigger>What is your return policy?</AccordionTrigger>
-              <AccordionContent>We offer a 30-day money-back guarantee on all devices. Phones must be in original condition with all accessories included. A restocking fee may apply for damaged packaging.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="warranty">
-              <AccordionTrigger>How does the warranty work?</AccordionTrigger>
-              <AccordionContent>All phones come with a 1-year manufacturer warranty covering hardware defects. You can also purchase Premium Protect for extended coverage including accidental damage.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="unlocking">
-              <AccordionTrigger>Are the phones carrier unlocked?</AccordionTrigger>
-              <AccordionContent>Yes, all devices sold on our store are fully unlocked and compatible with any major carrier worldwide. Just insert your active SIM card.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="setup">
-              <AccordionTrigger>Do you offer technical setup assistance?</AccordionTrigger>
-              <AccordionContent>Absolutely! Our support team can guide you through data transfer, account setup, and basic troubleshooting via phone or live chat.</AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold text-foreground mb-6">Send us a Message</h2>
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
+      <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-8">
+        <div className="lg:col-span-3 max-w-3xl">
           <Card>
-            <CardContent className="pt-6">
-              <Form>
-                <form onSubmit={onSubmitContactForm} className="space-y-4">
-                  <FormField>
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" value={contactName} onChange={onNameChange} required />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </FormField>
-                  <FormField>
-                    <FormItem>
-                      <FormLabel>Email Address</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="john@example.com" value={contactEmail} onChange={onEmailChange} required />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </FormField>
-                  <FormField>
-                    <FormItem>
-                      <FormLabel>Order Number (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="e.g. ORD-12345" value={contactOrder} onChange={onOrderChange} />
-                      </FormControl>
-                      <FormDescription>Helps us locate your purchase faster.</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  </FormField>
-                  <FormField>
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="How can we help you?" rows={4} value={contactMessage} onChange={onMessageChange} required />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </FormField>
-                  <Button type="submit" className="w-full">Send Message</Button>
-                </form>
-              </Form>
+            <CardHeader>
+              <CardTitle>Support</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex items-center gap-2">
+                      <TruckIcon className="h-5 w-5" />
+                      <span>Track Your Order</span>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={trackOrder} className="space-y-4">
+                    <Field>
+                      <FieldLabel>Order ID or Email</FieldLabel>
+                      <FieldContent>
+                        <Input placeholder="Enter order ID or email address" value={orderQuery} onChange={setOrderQuery} />
+                      </FieldContent>
+                      <FieldDescription>Track your order status in real-time</FieldDescription>
+                    </Field>
+                    <Button type="submit" className="w-full">
+                      <SearchIcon className="h-4 w-4 mr-2" />
+                      <span>Track Order</span>
+                    </Button>
+                  </form>
+                  <div className="mt-6 p-4 bg-muted rounded-lg">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CircleStackIcon className="h-4 w-4" />
+                      <span>$state.orderStatus || 'Enter order details to track'</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex items-center gap-2">
+                      <WrenchScrewdriverIcon className="h-5 w-5" />
+                      <span>Troubleshooting</span>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="battery">
+                      <AccordionTrigger>Battery draining too fast</AccordionTrigger>
+                      <AccordionContent>Check background apps, lower screen brightness, disable unused features. Restart device or update iOS/Android.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="software">
+                      <AccordionTrigger>App crashes or glitches</AccordionTrigger>
+                      <AccordionContent>Force close app, clear cache, update to latest version. Check for OS updates in Settings.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="screen">
+                      <AccordionTrigger>Screen frozen or unresponsive</AccordionTrigger>
+                      <AccordionContent>Force restart: iPhone (Vol+Vol+Power), Android (Power+VolDown 10s). Connect to computer if unresponsive.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="charging">
+                      <AccordionTrigger>Not charging properly</AccordionTrigger>
+                      <AccordionContent>Try different cable/outlet, clean port, restart. Wireless charging? Check alignment and case interference.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="wifi">
+                      <AccordionTrigger>WiFi connection issues</AccordionTrigger>
+                      <AccordionContent>Forget network and reconnect, restart router, toggle Airplane mode. Check signal strength.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="camera">
+                      <AccordionTrigger>Camera not working</AccordionTrigger>
+                      <AccordionContent>Close other apps, clean lens, restart. Test in different apps. Check permissions in Settings.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="sound">
+                      <AccordionTrigger>No sound or speaker issues</AccordionTrigger>
+                      <AccordionContent>Check volume/mute, clean speaker grills, test different apps. Try Bluetooth headphones.</AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="storage">
+                      <AccordionTrigger>Storage full or slow performance</AccordionTrigger>
+                      <AccordionContent>{"Delete unused apps/photos, clear cache, move to cloud. Check Settings > Storage."}</AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </CardContent>
+              </Card>
             </CardContent>
           </Card>
         </div>
-      </section>
-      <div className="fixed bottom-6 right-6 z-50">
-        <Button size="icon" className="h-14 w-14 rounded-full shadow-2xl" onClick={onToggleLiveChat}>
-          <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />
-        </Button>
+        <aside className="lg:sticky lg:top-8 lg:h-fit space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>File Warranty Claim</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <form onSubmit={submitWarrantyClaim} className="space-y-4">
+                <Field>
+                  <FieldLabel>Phone Model</FieldLabel>
+                  <FieldContent>
+                    <Select value={model} onValueChange={setModel}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="iphone-15">iPhone 15</SelectItem>
+                        <SelectItem value="samsung-s24">Samsung S24</SelectItem>
+                        <SelectItem value="pixel-8">Google Pixel 8</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FieldContent>
+                </Field>
+                <Field>
+                  <FieldLabel>Issue Description</FieldLabel>
+                  <FieldContent>
+                    <Textarea placeholder="Describe the issue..." value={issueDescription} onChange={setIssueDescription} />
+                  </FieldContent>
+                </Field>
+                <Field>
+                  <FieldLabel>Receipt (optional)</FieldLabel>
+                  <FieldContent>
+                    <Input type="file" accept="image/*,.pdf" onChange={setReceiptFile} />
+                  </FieldContent>
+                </Field>
+                <Button type="submit" className="w-full" variant="default">
+                  <DocumentCheckIcon className="h-4 w-4 mr-2" />
+                  <span>Submit Claim</span>
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Repair Centers</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="text-xs text-muted-foreground">Find nearest location</div>
+              <div className="h-48 bg-muted rounded-lg flex items-center justify-center">
+                <MapPinIcon className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <Button variant="outline" size="sm" className="w-full" onClick={scheduleAppointment}>Schedule Appointment</Button>
+            </CardContent>
+            <CardFooter className="pt-0">
+              <div className="space-y-1 text-xs">
+                <div className="font-medium">Downtown Store</div>
+                <div>123 Main St, City</div>
+                <div>Mon-Fri 9AM-7PM</div>
+              </div>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <div className="flex items-center gap-2">
+                  <DocumentTextIcon className="h-5 w-5" />
+                  <span>Manuals</span>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <Button variant="ghost" className="justify-start h-auto p-3 w-full text-left" onClick={downloadManual} data-model="iphone-15">
+                  <span>iPhone 15 Manual</span>
+                </Button>
+                <Button variant="ghost" className="justify-start h-auto p-3 w-full text-left" onClick={downloadManual} data-model="samsung-s24">
+                  <span>Samsung S24 Manual</span>
+                </Button>
+                <Button variant="ghost" className="justify-start h-auto p-3 w-full text-left" onClick={downloadManual} data-model="pixel-8">
+                  <span>Google Pixel 8 Manual</span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          <Button variant="outline" size="lg" className="w-full" onClick={openChat}>
+            <MessageCircleIcon className="h-5 w-5 mr-2" />
+            <span>Live Chat Support</span>
+          </Button>
+        </aside>
       </div>
     </div>
   )

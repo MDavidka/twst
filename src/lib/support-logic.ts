@@ -1,117 +1,77 @@
-export function onCopyEmail(event: { preventDefault?: () => void }): void {
-  if (event.preventDefault) event.preventDefault()
-  navigator.clipboard.writeText('support@phonewebshop.com').then(() => {
-    window.alert('Email address copied to clipboard!')
-  }).catch(() => {
-    window.alert('Failed to copy email address.')
-  })
-}
-
-export function onStartChat(event: { preventDefault?: () => void }): void {
-  if (event.preventDefault) event.preventDefault()
-  onToggleLiveChat(event)
-}
-
-export function onCopyPhone(event: { preventDefault?: () => void }): void {
-  if (event.preventDefault) event.preventDefault()
-  navigator.clipboard.writeText('1-800-555-0199').then(() => {
-    window.alert('Phone number copied to clipboard!')
-  }).catch(() => {
-    window.alert('Failed to copy phone number.')
-  })
-}
-
-export function onSubmitContactForm(event: { preventDefault(): void, target: unknown }): void {
+export function trackOrder(event: { preventDefault(): void, target: unknown }): void {
   event.preventDefault()
   const form = event.target as HTMLFormElement
-  const data = new FormData(form)
-  
-  fetch('/api/support/contact', {
+  const formData = new FormData(form)
+  const query = formData.get('orderQuery')?.toString() || ''
+  if (!query) {
+    window.alert('Please enter an order ID or email')
+    return
+  }
+  fetch('/api/support/track-order', {
     method: 'POST',
-    body: data
-  }).then(() => {
-    window.alert('Thank you for reaching out! Our support team will contact you within 24 hours.')
-    form.reset()
-    localStorage.removeItem('support_contactName')
-    localStorage.removeItem('support_contactEmail')
-    localStorage.removeItem('support_contactOrder')
-    localStorage.removeItem('support_contactMessage')
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  }).then(res => res.json()).then(data => {
+    const status = data.status || 'No status found'
+    const statusEl = form.parentElement?.querySelector('[data-status]') as HTMLElement
+    if (statusEl) statusEl.textContent = status
+    window.alert(`Order status: ${status}`)
   }).catch(() => {
-    window.alert('Something went wrong while sending your message. Please try again.')
+    window.alert('Order not found. Please check your order ID or email.')
   })
 }
 
-export function onNameChange(event: { target: { value: string } }): void {
-  localStorage.setItem('support_contactName', event.target.value)
+export function submitWarrantyClaim(event: { preventDefault(): void, target: unknown }): void {
+  event.preventDefault()
+  const form = event.target as HTMLFormElement
+  const formData = new FormData(form)
+  fetch('/api/support/warranty-claim', {
+    method: 'POST',
+    body: formData
+  }).then(res => res.json()).then(() => {
+    window.alert('Warranty claim submitted successfully! We will contact you within 48 hours.')
+    form.reset()
+  }).catch(() => {
+    window.alert('Something went wrong. Please try again.')
+  })
 }
 
-export function onEmailChange(event: { target: { value: string } }): void {
-  localStorage.setItem('support_contactEmail', event.target.value)
-}
-
-export function onOrderChange(event: { target: { value: string } }): void {
-  localStorage.setItem('support_contactOrder', event.target.value)
-}
-
-export function onMessageChange(event: { target: { value: string } }): void {
-  localStorage.setItem('support_contactMessage', event.target.value)
-}
-
-export function onToggleLiveChat(event: { preventDefault?: () => void }): void {
-  if (event.preventDefault) event.preventDefault()
-  const widgetId = 'live-chat-widget-container'
-  const existing = document.getElementById(widgetId)
-  
-  if (existing) {
-    existing.remove()
-  } else {
-    const widget = document.createElement('div')
-    widget.id = widgetId
-    widget.style.position = 'fixed'
-    widget.style.bottom = '90px'
-    widget.style.right = '24px'
-    widget.style.width = '320px'
-    widget.style.height = '450px'
-    widget.style.backgroundColor = '#ffffff'
-    widget.style.border = '1px solid #e5e7eb'
-    widget.style.borderRadius = '0.5rem'
-    widget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-    widget.style.zIndex = '9999'
-    widget.style.display = 'flex'
-    widget.style.flexDirection = 'column'
-    widget.style.overflow = 'hidden'
-    
-    const header = document.createElement('div')
-    header.style.backgroundColor = '#84cc16'
-    header.style.color = '#ffffff'
-    header.style.padding = '16px'
-    header.style.fontWeight = 'bold'
-    header.style.display = 'flex'
-    header.style.justifyContent = 'space-between'
-    header.style.alignItems = 'center'
-    header.innerText = 'Live Support'
-    
-    const closeBtn = document.createElement('button')
-    closeBtn.innerText = '✕'
-    closeBtn.style.background = 'none'
-    closeBtn.style.border = 'none'
-    closeBtn.style.color = 'white'
-    closeBtn.style.cursor = 'pointer'
-    closeBtn.onclick = () => widget.remove()
-    header.appendChild(closeBtn)
-    
-    const body = document.createElement('div')
-    body.style.padding = '16px'
-    body.style.flex = '1'
-    body.style.display = 'flex'
-    body.style.flexDirection = 'column'
-    body.style.justifyContent = 'center'
-    body.style.alignItems = 'center'
-    body.style.color = '#6b7280'
-    body.innerText = 'Connecting you to the next available agent...'
-    
-    widget.appendChild(header)
-    widget.appendChild(body)
-    document.body.appendChild(widget)
+export function setReceiptFile(event: { target: { files: FileList | null } }): void {
+  const file = event.target.files?.[0]
+  const input = event.target as HTMLInputElement
+  if (file) {
+    const maxSize = 5 * 1024 * 1024 // 5MB
+    if (file.size > maxSize) {
+      window.alert('File too large. Please upload a file under 5MB.')
+      input.value = ''
+      return
+    }
   }
+}
+
+export function scheduleAppointment(event: { preventDefault(): void }): void {
+  event.preventDefault()
+  const url = 'https://calendar.google.com/calendar/appointments/someid'
+  window.open(url, '_blank')
+  window.alert('Appointment scheduler opened. Book your repair slot!')
+}
+
+export function downloadManual(event: { preventDefault(): void, currentTarget: { dataset: { model: string } } }): void {
+  event.preventDefault()
+  const model = event.currentTarget.dataset.model
+  const manuals: Record<string, string> = {
+    'iphone-15': 'https://example.com/manuals/iphone-15.pdf',
+    'samsung-s24': 'https://example.com/manuals/samsung-s24.pdf',
+    'pixel-8': 'https://example.com/manuals/pixel-8.pdf'
+  }
+  const url = manuals[model || ''] || manuals['iphone-15']
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `${model || 'manual'}.pdf`
+  link.click()
+}
+
+export function openChat(event: { preventDefault(): void }): void {
+  event.preventDefault()
+  window.alert('Live chat support\n\nHi! How can we help you today?\n\n(Intercom/Zendesk integration would appear here)')
 }

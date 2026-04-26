@@ -2,14 +2,14 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-export function Home() {
-  React.useEffect(() => { document.title = "Home" }, [])
+export function Products() {
+  React.useEffect(() => { document.title = "Products" }, [])
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Home</h1>
-        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">The landing page targets first-time visitors browsing for phones, showcasing top deals and new arrivals to drive quick purchases. It features a hero banner with a featured smartphone promo and buy-now CTA, a grid of 6 bestselling phones with prices and ratings, customer testimonial carousel, featured accessories section, and newsletter signup. The primary CTA scrolls to the products grid or links to /products for full catalog.</p>
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Products</h1>
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">This catalog page serves shoppers ready to browse the full inventory, organized by phone brands and categories like flagship, mid-range, budget. It displays a filterable table or grid of 20+ phones showing model, specs (RAM/Storage/Camera), price range, stock status, and 'View Details' buttons. Includes sorting by price/popularity and category tabs (iPhone, Samsung, Google Pixel, etc.). Primary CTA leads to individual product pages or /cart.</p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Button size="lg">
             <span>Get started</span>
@@ -24,42 +24,42 @@ export function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Hero banner with countdown timer for flash sale</CardTitle>
+              <CardTitle>Filter dropdowns for brand, price range, storage size</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">Hero banner with countdown timer for flash sale</p>
+              <p className="text-sm text-muted-foreground">Filter dropdowns for brand, price range, storage size</p>
             </CardContent>
           </Card>
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Product grid with image zoom and 'Add to Cart' buttons</CardTitle>
+              <CardTitle>Sortable table with columns for specs and ratings</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">Product grid with image zoom and 'Add to Cart' buttons</p>
+              <p className="text-sm text-muted-foreground">Sortable table with columns for specs and ratings</p>
             </CardContent>
           </Card>
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Testimonial carousel with 5-star reviews and photos</CardTitle>
+              <CardTitle>Stock indicator badges (In Stock / Low Stock / Sold Out)</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">Testimonial carousel with 5-star reviews and photos</p>
+              <p className="text-sm text-muted-foreground">Stock indicator badges (In Stock / Low Stock / Sold Out)</p>
             </CardContent>
           </Card>
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Newsletter signup form with email validation</CardTitle>
+              <CardTitle>Pagination for 20+ products</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">Newsletter signup form with email validation</p>
+              <p className="text-sm text-muted-foreground">Pagination for 20+ products</p>
             </CardContent>
           </Card>
           <Card className="p-6">
             <CardHeader>
-              <CardTitle>Quick links to /products and /deals</CardTitle>
+              <CardTitle>'Compare' checkbox for up to 4 phones</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">Quick links to /products and /deals</p>
+              <p className="text-sm text-muted-foreground">'Compare' checkbox for up to 4 phones</p>
             </CardContent>
           </Card>
         </div>
